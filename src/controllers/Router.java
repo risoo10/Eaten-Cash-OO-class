@@ -2,7 +2,7 @@ package controllers;
 
 import java.awt.event.*;
 
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 public class Router {
 	
@@ -19,9 +19,18 @@ public class Router {
 				case "Master":
 					break;
 					
-				// User 
-				case "User":
-					UserController.getDomov();
+				// Prihlasenie Simple User 
+				case "Obycajny pouzivatel":
+					SimpleUserController.getSimpleUsers();
+					break;
+					
+				case "SimpleUserGetDomov":
+					String userId = ((JButton)e.getSource()).getText();
+					SimpleUserController.getDomov(userId);
+					break;
+					
+				case "NovySimpleUserGetDomov":
+					SimpleUserController.getNovyUserDomov();
 					break;
 					
 				case "UserSpat":

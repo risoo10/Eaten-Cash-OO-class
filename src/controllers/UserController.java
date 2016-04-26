@@ -14,24 +14,18 @@ import views.*;
 import views.formulare.*;
 
 
-public abstract class UserController {
+public class UserController {
 	
-	private Users users;
-	private static SimpleUser aktualUser;
+	protected Users users;
+	protected static SimpleUser aktualUser;
 	
 	
 	public static Okno nacitajOkno(){
 		return (Okno)MapaNahladov.vratNahlad("Okno");
-	}
+	}	
+	
 	// domovska stranka po prihlaseni
 	public static void getDomov(){
-		
-		// Vytvorim noveho pouzivatela.
-		//aktualUser = new SimpleUser();
-		Users users = (Users) MapaObjektov.vratObjekt("users");
-		aktualUser = (SimpleUser) users.getUser(0);
-		aktualUser.setId("Palko");
-		aktualUser.setRodic(new Rodic("Ocko Jozko"));
 		
 		MapaNahladov.pridajNahlad("UserDomov", new UserDomov(aktualUser, vytvorModelTabulky() ));
 		

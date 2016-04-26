@@ -11,7 +11,7 @@ public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// typy pouzivatelov 
-	public static String[] userTyp = { "User", "Rodic", "Master" }; // 3 typy
+	public static String[] userTyp = { "Obycajny pouzivatel", "Rodic", "Master" }; // 3 typy
 	
 	private List<User> users = new ArrayList<User>();
 	
@@ -27,8 +27,12 @@ public class Users implements Serializable {
 		users.add(u);
 	}
 	
-	public User getUser(int index){
-		return users.get(index);
+	public User getUser(String userId){
+		for(User u : users){
+			if(u.getId() == userId)
+				return u;
+		}
+		return null;
 	}
 	
 	

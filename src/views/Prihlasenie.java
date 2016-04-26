@@ -18,6 +18,7 @@ public class Prihlasenie implements Nahlad{
 	}
 	
 	public void akcia(){
+		
 		Okno okno = (Okno)MapaNahladov.vratNahlad("Okno");
 		okno.vymazVsetko();
 		
