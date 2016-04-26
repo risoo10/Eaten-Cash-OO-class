@@ -11,9 +11,9 @@ public class SimpleUser extends User implements PosluchacUpozornenia{
 		super();
 	}
 
-	private String upozornenie = "Chobooot nesmies jest tolko !!";
+	private String upozornenie;
 	private Rodic rodic;
-	private Double limit = 0.0;
+	private Double limit;
 	
 
 	
@@ -25,14 +25,14 @@ public class SimpleUser extends User implements PosluchacUpozornenia{
 	
 	// Zisti ci bolo poslane upozorneni.
 	public boolean checkUpozornenia(){
-		if(upozornenie != "")
+		if(upozornenie != null)
 			return true;
 		else return false;
 	}
 	
 	// Zisti ci bol pridany limit.
 	public boolean checkLimit(){
-		if(limit != 0.0)
+		if(limit != null)
 			return true;
 		else return false;
 	}

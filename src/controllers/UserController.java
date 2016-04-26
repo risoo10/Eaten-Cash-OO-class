@@ -28,18 +28,6 @@ public class UserController {
 	public static void getDomov(){
 		
 		MapaNahladov.pridajNahlad("UserDomov", new UserDomov(aktualUser, vytvorModelTabulky() ));
-		
-		// Zistim ci neexistuju Upzornenia pre pouzivatela.
-		String upozornenie = null;
-		Okno okno = nacitajOkno();
-		okno.nastavPovodnuVelkost(600);
-		okno.obnovZmeny();
-
-		if(aktualUser.checkUpozornenia()){
-			upozornenie = aktualUser.getUpozornenie();
-			MapaNahladov.pridajNahlad("Upozornenie", new UpozorneniePanel(aktualUser.getUpozornenie(), aktualUser.getRodic().getId()));
-			
-		}
 	}
 	
 	// domovska stranka pocas existencie programu 
