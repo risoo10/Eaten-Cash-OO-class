@@ -2,6 +2,13 @@
 Thumbs.db
 ehthumbs.db
 
+# Moje subory
+$.settings/
+$bin/
+*.ser
+*.project
+*.classpath
+
 # Folder config file
 Desktop.ini
 
