@@ -1,6 +1,7 @@
 package models;
 
 public class Limit {
-	Double limit;
-	int limitovanyId;
+	private Double limit;
+	private String typLimitu;
+	private PosluchacLimit user;
 }
