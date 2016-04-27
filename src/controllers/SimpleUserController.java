@@ -7,20 +7,21 @@ import javax.swing.JOptionPane;
 
 import models.*;
 import views.*;
+import views.formulare.PrihlasenieSimpleUsers;
 
 
 public class SimpleUserController extends UserController{
 	
+	private static SimpleUser aktSimpleUser;
+	
+	
 	// Metoda nacita vsetkych existujucich pouzivatelov.
-	public static void getSimpleUsers(){
+	public static void getPrihlasenieSimpleUsers(){
 		
 		// Nacitam existujucich pouzivatelov typu SimpleUser
 		Users allUsers = (Users)MapaObjektov.vratObjekt("users");
-		List<SimpleUser> simpleUsers = new ArrayList<>();
-		for(User user : allUsers.getUsers()){
-			if(user instanceof SimpleUser)
-				simpleUsers.add((SimpleUser) user);
-		}
+		List<SimpleUser> simpleUsers = allUsers.getSimpleUsers();
+		
 		
 		// Vytvorim nahlad pre konkretne prihlasenie alebo vytvorenie noveho Obzcajneho Uzivatela.
 		MapaNahladov.pridajNahlad("SimpleUserPrihlasenie", new PrihlasenieSimpleUsers(simpleUsers));
@@ -32,38 +33,42 @@ public class SimpleUserController extends UserController{
 	public static void getDomov(String userId){
 		// Vyhladaj existujuceho pouzivatela s danym userId
 		Users users = (Users) MapaObjektov.vratObjekt("users");
-		aktualUser = (SimpleUser) users.getUser(userId);
+		aktSimpleUser = (SimpleUser) users.getUser(userId);
+		aktualUser = aktSimpleUser;
 		
 		UserController.getDomov();
 		
-		if(aktualUser.checkUpozornenia()){
+		
+		// Zsisti ci existuju nejake Upozornenia pre Aktualne prihlaseneho Pouzivatela.
+		if(aktSimpleUser.checkUpozornenia()){
 			// Zistim ci neexistuju Upzornenia pre pouzivatela.
 			String upozornenie = null;
 			Okno okno = nacitajOkno();
-			okno.nastavPovodnuVelkost(600);
-			upozornenie = aktualUser.getUpozornenie();
-			MapaNahladov.pridajNahlad("Upozornenie", new UpozorneniePanel(aktualUser.getUpozornenie(), aktualUser.getRodic().getId()));
+			okno.nastavPovodnuVelkost(600); // Pri pridavani upozornenia sa zvacsi velkost okna
+			upozornenie = aktSimpleUser.getUpozornenie();
+			MapaNahladov.pridajNahlad("Upozornenie", new UpozorneniePanel(aktSimpleUser.getUpozornenie(), aktSimpleUser.getRodic().getId()));
 			okno.obnovZmeny();
 		}
+		
+		// Zisti ci existuju nejake Limity pre Aktualne prihlaseneho Pouzivatela.
+		
+		
 		
 	}
 	
 	// Metoda vytvori noveho pouzivatela s Id zo vstupu. Potom prejde na domovsku stranku.
 	public static void getNovyUserDomov(){
 		
-		// Nacita vstup a ovaliduje
-		String errorMsg = "";
+		Users users = (Users)MapaObjektov.vratObjekt("users");
+		
+		// Nacita vstup a neskor ovaliduje
 		String userId = ((PrihlasenieSimpleUsers) MapaNahladov.vratNahlad("SimpleUserPrihlasenie")).getUserId();
 		
-		// Ak nepreslo UserId validaciou, tak vyhodi upozornenie
-		if(userId.isEmpty()) {
-			errorMsg = "Pole MENO: nesmie zostat prazdne!";
-			JOptionPane.showMessageDialog(null, errorMsg);
-		} else {
+		if(ovalidujNovehoUzivatela(userId) == null) {  // Ak validacia prebehne spravne, vrati null
 			
 			// Pridam noveho pouzivatela do listu vsetkych Pouzivatelov
 			aktualUser = new SimpleUser(userId);
-			((Users)MapaObjektov.vratObjekt("users")).addUser(aktualUser);
+			users.addUser(aktualUser);
 			
 			// Prejdem domov
 			SimpleUserController.getDomov(aktualUser.getId());

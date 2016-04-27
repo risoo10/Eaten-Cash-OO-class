@@ -17,7 +17,7 @@ import views.formulare.*;
 public class UserController {
 	
 	protected Users users;
-	protected static SimpleUser aktualUser;
+	protected static User aktualUser;
 	
 	
 	public static Okno nacitajOkno(){
@@ -172,6 +172,23 @@ public class UserController {
 			
 			MapaNahladov.pridajNahlad("Detail", new DetailJedla(udajeJedlo));
 		}
+	}
+	
+	
+	protected static String ovalidujNovehoUzivatela(String userId) {
+		// Ak nepreslo UserId validaciou, tak vyhodi upozornenie
+		String errorMsg = null;
+		Users users = (Users)MapaObjektov.vratObjekt("users");
+		
+		if(userId.isEmpty()) {
+			errorMsg = "Pole MENO: nesmie zostat prazdne!";
+			JOptionPane.showMessageDialog(null, errorMsg);
+		} else if(! users.isUnique(userId)){
+			errorMsg = "Meno | " + userId + " | sa uz pouziva. Zadajte ine meno !";
+			JOptionPane.showMessageDialog(null, errorMsg);
+		}
+		
+		return errorMsg;
 	}
 	
 }

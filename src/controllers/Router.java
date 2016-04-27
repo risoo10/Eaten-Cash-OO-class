@@ -13,15 +13,14 @@ public class Router {
 			String actionId = e.getActionCommand();
 			
 			switch(actionId){
-				case "Rodic":				
-					break;
+				
 					
 				case "Master":
 					break;
 					
 				// Prihlasenie Simple User 
-				case "Obycajny pouzivatel":
-					SimpleUserController.getSimpleUsers();
+				case "Prihlasenie Obycajny pouzivatel":
+					SimpleUserController.getPrihlasenieSimpleUsers();
 					break;
 					
 				case "SimpleUserGetDomov":
@@ -53,7 +52,21 @@ public class Router {
 					JComboBox combo = (JComboBox)e.getSource();
 					String activeValue = (String)combo.getSelectedItem();
 					NoveJedloController.comboBoxPanel(activeValue);
-				
+					break;
+					
+					// Prihlasenie RODIC	
+				case "Prihlasenie Rodic":
+					RodicController.getPrihlasenieRodic();
+					break;
+					
+				case "RodicGetDomov":
+					userId = ((JButton)e.getSource()).getText();
+					RodicController.getDomov(userId);
+					break;
+					
+				case "NovyRodicGetDomov":
+					RodicController.getNovyRodicDomov();
+					break;
 			}
 			
 		}

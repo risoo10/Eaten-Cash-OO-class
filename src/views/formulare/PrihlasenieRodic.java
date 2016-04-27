@@ -1,30 +1,34 @@
-package views;
+package views.formulare;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.*;
-
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
 import controllers.Router;
-import models.SimpleUser;
+import models.*;
+import views.MapaNahladov;
+import views.Nahlad;
+import views.Okno;
 
-public class PrihlasenieSimpleUsers implements Nahlad{
-	
+public class PrihlasenieRodic implements Nahlad {
 	private String id;
 	
 	private JTextField novyUserId;
 	
-	
-	// Konstruktor volany pri kazdom zobrazeni informacii
-	public PrihlasenieSimpleUsers(List<SimpleUser> simpleUsers) {
-		
+	public PrihlasenieRodic( List<Rodic> rodicia) {
 		// Vytvori novy panel a nastavi velkost, layout a poziciu v okne.
 		Okno okno = (Okno)MapaNahladov.vratNahlad("Okno");
+		
+		// Vymaz spodny panel
+		okno.remove(okno.getSpodnyPanel());
+		
 		JPanel pnl = new JPanel();
 		pnl.setSize(new Dimension(0, 300)); //dolezita je iba Vyska (v BorderLayout sa sirka pri 
 											// zobrazeni ako SOUTH prisposobi) 
@@ -36,26 +40,26 @@ public class PrihlasenieSimpleUsers implements Nahlad{
 		
 		// Nadpis pre Existujucich pouzivatelov.
 		JLabel ndps1;
-		if(simpleUsers.isEmpty()){
-			ndps1 = new JLabel("Neexistuju ziadni pouzivatelia !", JLabel.CENTER);
+		if(rodicia.isEmpty()){
+			ndps1 = new JLabel("Neexistuju ziadni Rodicia !", JLabel.CENTER);
 		} else {
-			ndps1 = new JLabel("Vyber existujuceho pouzivatela !", JLabel.CENTER);
+			ndps1 = new JLabel("Vyber existujuceho Rodica !", JLabel.CENTER);
 		}
 		ndps1.setFont(new Font(ndps1.getFont().getName(), Font.PLAIN, 16));
 		pnl.add(ndps1);
 		
 		// Nadpis pre Existujucich pouzivatelov.
-		JLabel ndps2 = new JLabel("Alebo vytvor noveho pouzivatela.", JLabel.CENTER);
+		JLabel ndps2 = new JLabel("Skus vytvorit noveho Rodica.", JLabel.CENTER);
 		ndps2.setFont(new Font(ndps2.getFont().getName(), Font.PLAIN, 16));
 		pnl.add(ndps2);
 		
 		// Vytvori mini panel s Tlacidlami pre existujucich pouzivatelov.
 		JPanel pnlUsers = new JPanel();
 		pnlUsers.setLayout(new FlowLayout());
-		for(SimpleUser u : simpleUsers){
-			JButton btnUser = new JButton(u.getId());
+		for(Rodic r : rodicia){
+			JButton btnUser = new JButton(r.getId());
 			btnUser.addActionListener(Router.getRouter());
-			btnUser.setActionCommand("SimpleUserGetDomov");
+			btnUser.setActionCommand("RodicGetDomov");
 			pnlUsers.add(btnUser);
 		}
 		pnl.add(pnlUsers);
@@ -68,7 +72,10 @@ public class PrihlasenieSimpleUsers implements Nahlad{
 		pnlNovy.add(novyUserId);
 		JButton btnNovyUser = new JButton("Vytvor!");
 		btnNovyUser.addActionListener(Router.getRouter());
-		btnNovyUser.setActionCommand("NovySimpleUserGetDomov");
+		btnNovyUser.setActionCommand("NovyRodicGetDomov");
+		
+		
+		
 		pnlNovy.add(btnNovyUser);
 		pnl.add(pnlNovy);
 		
@@ -78,10 +85,9 @@ public class PrihlasenieSimpleUsers implements Nahlad{
 		
 		
 		okno.add(pnl, BorderLayout.SOUTH);
+		okno.setSpodnyPanel(pnl);
 		okno.obnovZmeny();
 	}
-	
-	
 	
 	
 	
@@ -98,7 +104,9 @@ public class PrihlasenieSimpleUsers implements Nahlad{
 	}
 	
 	public String getUserId(){
-		return novyUserId.getText();
+		if(novyUserId != null)
+			return novyUserId.getText();
+		return "";
 	}
 
 }

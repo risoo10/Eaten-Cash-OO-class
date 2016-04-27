@@ -40,7 +40,7 @@ public class Prihlasenie implements Nahlad{
 		// tlacidla pre prihlasenie v jednom paneli	
 		for(int i=0; i< userTypy.length; i++){
 			JButton tlacidlo = new JButton(userTypy[i]);
-			tlacidlo.setActionCommand(userTypy[i]);
+			tlacidlo.setActionCommand("Prihlasenie " + userTypy[i]);
 			tlacidlo.setPreferredSize(new Dimension(150, 80));
 			tlacidlo.addActionListener(Router.getRouter());
 			tlacidlaPrihlasenie.add(tlacidlo);

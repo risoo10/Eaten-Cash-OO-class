@@ -35,6 +35,34 @@ public class Users implements Serializable {
 		return null;
 	}
 	
+	public boolean isUnique(String userId){
+		for(User u : users){
+			if(userId == u.getId())
+				return false;
+		}
+		return true;
+	}
+	
+	// Vrati iba pouzivatelov typu SimpleUser
+	public List<SimpleUser> getSimpleUsers(){
+		List<SimpleUser> simpleUsers = new ArrayList<>();
+		for(User user : users){
+			if(user instanceof SimpleUser)
+				simpleUsers.add((SimpleUser) user);
+		}
+		
+		return simpleUsers;
+	}
+	
+	// Vrati iba pouzivatelov typu Rodic
+	public List<Rodic> getRodicUsers(){
+		List<Rodic> rodicUsers = new ArrayList<>();
+		for(User user : users){
+			if(user instanceof Rodic)
+					rodicUsers.add((Rodic) user);
+		}
+		return rodicUsers;
+	}
 	
 	
 	
