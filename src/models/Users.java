@@ -37,7 +37,7 @@ public class Users implements Serializable {
 	
 	public boolean isUnique(String userId){
 		for(User u : users){
-			if(userId == u.getId())
+			if(userId.equals(u.getId()))
 				return false;
 		}
 		return true;

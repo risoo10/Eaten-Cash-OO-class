@@ -183,7 +183,9 @@ public class UserController {
 		if(userId.isEmpty()) {
 			errorMsg = "Pole MENO: nesmie zostat prazdne!";
 			JOptionPane.showMessageDialog(null, errorMsg);
-		} else if(! users.isUnique(userId)){
+		} 
+		
+		if(! users.isUnique(userId)){
 			errorMsg = "Meno | " + userId + " | sa uz pouziva. Zadajte ine meno !";
 			JOptionPane.showMessageDialog(null, errorMsg);
 		}
