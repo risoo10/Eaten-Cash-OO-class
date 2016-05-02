@@ -24,6 +24,7 @@ public class Prihlasenie implements Nahlad{
 		
 		// nacita a prida logo do Okna
 		JLabel logoImg = nacitajLogo("velke");	
+		logoImg.setPreferredSize(new Dimension(okno.getWidth(), 250));
 		okno.add(logoImg, BorderLayout.NORTH);
 		
 		// novy Panel 
@@ -32,7 +33,7 @@ public class Prihlasenie implements Nahlad{
 		
 		// nadpis
 		JLabel nadpis = new JLabel("Prihlaste sa :", JLabel.CENTER);
-		nadpis.setPreferredSize(new Dimension(okno.getWidth(), 50));
+		nadpis.setPreferredSize(new Dimension(okno.getWidth(), 90));
 		nadpis.setFont(new Font("SANS_SERIF", Font.PLAIN, 20));
 		tlacidlaPrihlasenie.add(nadpis);
 		

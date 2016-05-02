@@ -22,11 +22,6 @@ public class PrihlasenieController {
 		File f = new File("VsetkyData.ser");
 		if(f.exists()){
 			MapaObjektov.vlozObjekt("users", UsersController.nacitajVsetkyData());
-			System.out.println("Subor VsetkyData.ser existuje.");
-			List<User> userikovia = ((Users)MapaObjektov.vratObjekt("users")).getUsers();
-			for(User r : userikovia){
-				System.out.println("CHOBOOOOOOT ******************");
-			}
 		} else {
 			// vytvor Pouzivatelov
 			MapaObjektov.vlozObjekt("users", new Users());

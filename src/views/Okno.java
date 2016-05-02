@@ -14,7 +14,7 @@ public class Okno extends JFrame implements Nahlad{
 	
 	public Router router = new Router();
 	private String id;
-	private int vyska = 600;
+	private int vyska = 700;
 	
 	// na upravovanie pocas bezania programu ... referencia
 	private JButton btnSpat;

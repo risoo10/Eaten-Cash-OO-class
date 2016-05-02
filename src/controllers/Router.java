@@ -4,6 +4,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import views.MapaNahladov;
+import views.formulare.PrihlasenieMaster;
+
 public class Router {
 	
 	private static ActionListener router = new ActionListener(){
@@ -14,9 +17,6 @@ public class Router {
 			
 			switch(actionId){
 				
-					
-				case "Master":
-					break;
 					
 				// Prihlasenie Simple User 
 				case "Prihlasenie Obycajny pouzivatel":
@@ -67,6 +67,15 @@ public class Router {
 				case "NovyRodicGetDomov":
 					RodicController.getNovyRodicDomov();
 					break;
+					
+					
+					// Prihlasenie MASTER
+				case "Prihlasenie Master":
+					MasterController.prihlasenieInstancia();
+					break;
+					
+				case "MasterPrihlasDomov":				
+					MasterController.prihlasenieDomov();
 			}
 			
 		}

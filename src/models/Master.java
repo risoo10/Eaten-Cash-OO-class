@@ -2,12 +2,39 @@ package models;
 
 import java.util.*;
 
-public class Master extends Rodic {
+public class Master extends User {
 	
-	public Master(String id) {
+	private static Master instance = null;
+	private String heslo;
+	
+	// Informacie o vsetkych limitoch pre ostatnych.
+	private List<Limit> limity = new ArrayList<Limit>();
+	
+	
+	// Objekt master sa vytvori iba raz a preto PRIVATE konsktruktor.
+	private Master(String id, String newHeslo) {
 		super(id);
-		// TODO Auto-generated constructor stub
+		heslo = newHeslo;
 	}
 
-	List<Limit> limity = new ArrayList<Limit>();
+	// Metoda vrati instanciu objektu a vytvori novu ak neexistuje.
+	public static Master getInstance() {
+		if ( instance == null ){
+			
+			// Jedina instancia s TYMITO UDAJMI ********
+			instance = new Master("admin", "password10");
+			
+			return instance;
+		} else {
+			return instance;
+		}
+	}
+	
+	// Overi heslo, vracia TRUE / FALSE. Nikto tak nema pristup k heslu, okrem MASTER objektu.
+	public boolean checkPassword(String heslo){
+		if(this.heslo.equals(heslo))
+			return true;
+		else
+			return false;
+	}
 }

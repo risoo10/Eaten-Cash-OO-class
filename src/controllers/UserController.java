@@ -24,27 +24,51 @@ public class UserController {
 		return (Okno)MapaNahladov.vratNahlad("Okno");
 	}	
 	
-	// domovska stranka po prihlaseni
+	// Vytvori prvy krat domovsku stranku.
 	public static void getDomov(){
 		
-		MapaNahladov.pridajNahlad("UserDomov", new UserDomov(aktualUser, vytvorModelTabulky() ));
+		MapaNahladov.pridajNahlad("UserDomov", new UserDomov());
+		UserController.getDomovBack();
 	}
 	
-	// domovska stranka pocas existencie programu 
+	// Nacita informacie z modelu a vypise na domovsku stranku s prehladom.
 	public static void getDomovBack(){
-		UserDomov nahlad = (UserDomov)MapaNahladov.vratNahlad("UserDomov");
 		
+		// Nastavi okno na povodnu velkost.
+		UserDomov nahlad = (UserDomov)MapaNahladov.vratNahlad("UserDomov");
 		Okno okno = nacitajOkno();
 		okno.nastavPovodnuVelkost();
 		
-		nahlad.akcia(aktualUser, vytvorModelTabulky() );
+		// Mapa pre udaje o Prehlade financii.
+		// Mapa s modelmi pre vytvorenie tabulky.
+		Map<PrehladyStravovania, Double> mapaPrehlady = new LinkedHashMap<>();
+		Map<PrehladyStravovania, DefaultTableModel> mapaModelyTab = new LinkedHashMap<>();
+		
+		// Pre kazdy typ prehladu vytvori Prehlad a Model tabulky a vlozi do map.
+		for (PrehladyStravovania prehlad : PrehladyStravovania.values()) {
+			// Vrati list pre spravny prehlad.
+			List<Jedlo> list = ImportJedal.prehladZa(prehlad, aktualUser);
+			
+			// Sumuje setky jedla v liste.
+			Double sumaJedal = 0.0;
+			for(Jedlo j : list){
+				sumaJedal += j.getCena();
+			}
+			
+			mapaPrehlady.put(prehlad, sumaJedal);
+			mapaModelyTab.put(prehlad, vytvorModelTabulky(list));	
+			
+		}		
+		
+		nahlad.akcia(aktualUser, mapaPrehlady, mapaModelyTab );
+		
 	}
 	
 	// vytvor table model z aktualneho pouzivatela
-	private static DefaultTableModel vytvorModelTabulky(){
+	private static DefaultTableModel vytvorModelTabulky(List<Jedlo> list){
 		String[] columns = {"Nazov", "Miesto", "Cas", "Cena", "Akcia"};
 		DefaultTableModel tableModelAll = new DefaultTableModel(null, columns );
-		List<Jedlo> list = aktualUser.vratListJedal();
+		
 		for(Jedlo jedlo: list){
 			Object[] dataJedlo = new Object[5];
 			dataJedlo[0] = jedlo.getNazov();
@@ -69,14 +93,15 @@ public class UserController {
 				// e.getActionCommand vrati index riadku v ktorom bolo stlacene vymaz
 				int modelRow = Integer.valueOf(e.getActionCommand()); 
 				
-				// vymaze Idexovany riadok z modelu a aj z tabulky
-				((DefaultTableModel)table.getModel()).removeRow(modelRow);
-				
 				// vymaze zaznam z listu jedal
 				aktualUser.removeReverseJedlo(modelRow);
+				
+				// Zobrazi domovsku stranku.
+				UserController.getDomovBack();
 			}
 			
 		};
+		
 	
 		return vymazRiadok;
 	}

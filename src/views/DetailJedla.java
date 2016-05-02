@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -86,6 +87,7 @@ public class DetailJedla extends JPanel implements Nahlad{
 				
 				JTextArea suroviny = new JTextArea(udaje.get("suroviny"));
 				suroviny.setEditable(false);
+				suroviny.setBackground(new Color(238, 238, 238)); // siva farba rgb = 220, 220, 220
 				suroviny.setSize(300, 90);
 				zakladneUdaje.add(suroviny);
 				
@@ -101,6 +103,7 @@ public class DetailJedla extends JPanel implements Nahlad{
 				
 				JTextArea popis = new JTextArea(udaje.get("popis"));
 				popis.setEditable(false);
+				popis.setBackground(new Color(238, 238, 238));
 				popis.setSize(300, 90);
 				zakladneUdaje.add(popis);
 				

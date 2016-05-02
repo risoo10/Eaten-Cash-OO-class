@@ -1,6 +1,8 @@
 package views;
 
 import java.awt.*;
+import java.util.Map;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -12,12 +14,12 @@ public class UserDomov extends JPanel implements Nahlad{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Okno okno = (Okno)MapaNahladov.vratNahlad("Okno");
+	private static Okno okno = (Okno)MapaNahladov.vratNahlad("Okno");
 	private static String id;
 	
 	public static final int COLUMN_BUTTON = 4; 
 	
-	public UserDomov(User aktualUser, DefaultTableModel tableModel){
+	public UserDomov(){
 		okno.vymazVsetko();
 		
 		// panel Hlavicka User
@@ -57,10 +59,9 @@ public class UserDomov extends JPanel implements Nahlad{
 		hlavicka.add(tlacidlaHlavicka, BorderLayout.EAST);
 		okno.add(hlavicka, BorderLayout.NORTH);
 		okno.setContent(new JPanel());
-		akcia(aktualUser, tableModel);
 	}
 	
-	public void akcia(User aktualUser, DefaultTableModel tableModel){
+	public void akcia(User aktualUser, Map<PrehladyStravovania, Double> mapaPrehlady, Map<PrehladyStravovania, DefaultTableModel> mapaModelTab ){
 		
 		// zbavi sa starych tlacidiel
 		okno.vymazTlacidla();
@@ -92,12 +93,45 @@ public class UserDomov extends JPanel implements Nahlad{
 		nadpisPrehlad.setFont(new Font("SANS_SERIF", Font.PLAIN, 20));
 		novyUserDomov.add(nadpisPrehlad);
 		
+		
+		// Panel so strucnym prehladom o prejedenych peniazoch.
+		// Pre vsetky typy prehladov.
+		
+		JPanel pnlPrehlad = new JPanel(new GridLayout(3,0));
+		// Vypise vsetky nadpisy panelov.
+		for(PrehladyStravovania prehlad : mapaPrehlady.keySet()){
+			JLabel prehladLbl = new JLabel(prehlad.getNadpis());
+			prehladLbl.setFont(new Font(prehladLbl.getFont().getName(), Font.BOLD, 18));
+			prehladLbl.setForeground(Color.DARK_GRAY);	
+			pnlPrehlad.add(prehladLbl);
+		}
+		
+		// Vypise den / tyzden / mesiac nad cenu.
+		for(PrehladyStravovania prehlad : mapaPrehlady.keySet()){
+			JLabel cas = new JLabel(prehlad.getCasNazov());
+			cas.setForeground(Color.gray);
+			cas.setBackground(new Color(0,0,0,0));
+			pnlPrehlad.add(cas);
+		}
+		
+		// Vypise vsetky sumy	
+		for(PrehladyStravovania prehlad : mapaPrehlady.keySet()){
+			JLabel suma = new JLabel(Double.toString(mapaPrehlady.get(prehlad)) + " €");
+			pnlPrehlad.add(suma);			
+		}
+		
+		pnlPrehlad.setPreferredSize(new Dimension(500, 60));
+		
+		novyUserDomov.add(pnlPrehlad);
+		
+		
+		
 		// vytvor karty pre prehlad
 		JTabbedPane kartyPrehlad = new JTabbedPane();
 		
 			// KARTA 1 - DNES
 			JPanel prehlad = new JPanel();
-			JTable tabulkaData = new JTable(tableModel);
+			JTable tabulkaData = new JTable(mapaModelTab.get(PrehladyStravovania.DNES));
 			
 			// Nastavi vysku riadku tabulky a zarovna obsah na stred.
 			DefaultTableCellRenderer df = new DefaultTableCellRenderer();
@@ -123,7 +157,7 @@ public class UserDomov extends JPanel implements Nahlad{
 			// nastavi 5ty riadok na tlacidla a prida akciu
 			ButtonColumn btnClmn = new ButtonColumn(tabulkaData, UserController.akciaVymazRiadok(), 4);
 			
-			tabulkaData.setPreferredScrollableViewportSize(new Dimension(800, 300));
+			tabulkaData.setPreferredScrollableViewportSize(new Dimension(800, 350));
 			tabulkaData.setFillsViewportHeight(true);
 			tabulkaData.addMouseListener(RouterMouse.getRouterMouse());
 			JScrollPane tabulka1 = new JScrollPane(tabulkaData);
