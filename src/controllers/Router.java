@@ -58,7 +58,7 @@ public class Router {
 					NoveJedloController.comboBoxPanel(activeValue);
 					break;
 					
-					// Prihlasenie RODIC	
+				// Prihlasenie RODIC	
 				case "Prihlasenie Rodic":
 					RodicController.getPrihlasenieRodic();
 					break;
@@ -72,14 +72,19 @@ public class Router {
 					RodicController.getNovyRodicDomov();
 					break;
 					
+				case "RodicUpozornenia":
+					RodicController.getUpozorneniaOptions();
+					break;
 					
-					// Prihlasenie MASTER
+				// Prihlasenie MASTER
 				case "Prihlasenie Master":
 					MasterController.prihlasenieInstancia();
 					break;
 					
 				case "MasterPrihlasDomov":				
 					MasterController.prihlasenieDomov();
+					break;
+					
 			}
 			
 		}

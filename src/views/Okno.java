@@ -141,6 +141,12 @@ public class Okno extends JFrame implements Nahlad{
 		return color;
 	}
 	
+	public void pozadieHlavicky(Color color){
+		hlavicka.setBackground(color);
+		hlavickaTlacidla.setBackground(color);
+		obnovZmeny();
+	}
+	
 	
 	
 	

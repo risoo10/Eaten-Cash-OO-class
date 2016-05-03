@@ -1,10 +1,13 @@
 package controllers;
 
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
 
 import models.Master;
 import views.MapaNahladov;
-import views.formulare.*;
+import views.Okno;
+import views.formulare.PrihlasenieMaster;
 
 public class MasterController extends UserController {
 	
@@ -17,9 +20,16 @@ public class MasterController extends UserController {
 	
 	public static void getDomov() {
 		
+
+		Okno okno = (Okno) MapaNahladov.vratNahlad("Okno");
+
 		UserController.getDomov();
 		
+		// Nastav hlavnu farbu - na ZLTU
+		okno.pozadieHlavicky(new Color(255, 212, 96));
+		
 		// TODO: funckionalita Mastera
+		
 		
 		
 	}

@@ -1,11 +1,11 @@
 package models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 public abstract class User implements Serializable{
-	
+		
 	protected String id;
 	protected List<Jedlo> mojeJedla = new ArrayList<Jedlo>();
 	// Povodne bude nastavena mena EURO.
@@ -22,6 +22,29 @@ public abstract class User implements Serializable{
 		Users users = (Users) MapaObjektov.vratObjekt("users");
 		users.addUser(this);
 	}
+	
+	// Metoda vrati Mapu s prehladom o minutych peniazoch pre Usera.
+	//  Pre kazdy typ prehladu vytvori Prehlad a Model tabulky a vlozi do map.
+	public Map<PrehladyStravovania,Double> prehladOFinanciach() {
+			Map<PrehladyStravovania,Double> mapaPrehlady = new LinkedHashMap<>();
+			
+			for (PrehladyStravovania prehlad : PrehladyStravovania.values()) {
+				// Vrati list pre spravny prehlad.
+				List<Jedlo> list = ImportJedal.prehladZa(prehlad, this);
+				
+				// Sumuje setky jedla v liste.
+				Double sumaJedal = 0.0;
+				for(Jedlo j : list){
+					// Pouziva spravny kurz podla pouzivatelom zvolenej meny.
+					sumaJedal += j.getCena();
+				}
+				mapaPrehlady.put(prehlad, sumaJedal);
+				
+				
+			}
+			return mapaPrehlady;
+	}
+	
 	
 	public FinancnaMena getMena() {
 		return mena;

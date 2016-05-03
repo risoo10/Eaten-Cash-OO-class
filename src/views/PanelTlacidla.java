@@ -86,7 +86,18 @@ public class PanelTlacidla {
 	}
 	
 	public void tlacidlaPreMaster(){
+		// Prebehne nacitanie vsetkych tlacidiel pre obycajneho pouzivatela.
+		tlacidlaPreUser();
 		
+		// Prida sa specialne tlacidlo pre Mastera.
+		// Tlacidlo UPOZORNENIA
+		JButton btnUpozornenia = new JButton("! LIMITY !");
+		btnUpozornenia.setPreferredSize(new Dimension(150, 80));
+		btnUpozornenia.setActionCommand("RodicUpozornenia");
+		btnUpozornenia.addActionListener(Router.getRouter());
+		pnlTlacidla.add(btnUpozornenia);
+		
+		ulozPanelTlacidla(pnlTlacidla);		
 	}
 	
 	public void tlacidlaPreNoveJedlo(){

@@ -49,7 +49,8 @@ public class UserDomov extends JPanel implements Nahlad{
 		okno.setContent(new JPanel());
 	}
 	
-	public void akcia(User aktualUser, Map<PrehladyStravovania, Double> mapaPrehlady, Map<PrehladyStravovania, DefaultTableModel> mapaModelTab ){			
+	public void akcia(User aktualUser, Map<PrehladyStravovania, Double> mapaPrehlady, 
+			Map<PrehladyStravovania, DefaultTableModel> mapaModelTab ){			
 		
 		
 		// vymaze predchadzajuci Obsah 
@@ -91,7 +92,7 @@ public class UserDomov extends JPanel implements Nahlad{
 		// Vypise vsetky sumy	
 		for(PrehladyStravovania prehlad : mapaPrehlady.keySet()){
 			// Pouzivam spravny znak podla nastavenej financnej meny.
-			JLabel suma = new JLabel(String.format("%.2f", mapaPrehlady.get(prehlad)) + " " + aktualUser.getMena().getZnak());
+			JLabel suma = new JLabel(String.format("%.2f", mapaPrehlady.get(prehlad)*aktualUser.getMena().getKurz()) + " " + aktualUser.getMena().getZnak());
 			pnlPrehlad.add(suma);			
 		}
 		

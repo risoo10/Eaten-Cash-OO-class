@@ -4,7 +4,6 @@ public class SimpleUser extends User implements PosluchacUpozornenia{
 	
 	public SimpleUser(String id) {
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public SimpleUser(){

@@ -1,11 +1,15 @@
 package models;
 
 public class Upozornenie {
-	private String textUpozornenia;
+	private String textUpozornenia = null;
 	private PosluchacUpozornenia user;
 	
 	public Upozornenie(String text, PosluchacUpozornenia user){
 		textUpozornenia = text;
+		this.user = user;
+	}
+	
+	public Upozornenie(PosluchacUpozornenia user){
 		this.user = user;
 	}
 	

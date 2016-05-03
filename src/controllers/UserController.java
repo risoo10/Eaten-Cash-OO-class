@@ -59,26 +59,17 @@ public class UserController {
 	
 		
 		// Mapa pre udaje o Prehlade financii.
+		Map<PrehladyStravovania, Double> mapaPrehlady = aktualUser.prehladOFinanciach();
+		
 		// Mapa s modelmi pre vytvorenie tabulky.
-		Map<PrehladyStravovania, Double> mapaPrehlady = new LinkedHashMap<>();
 		Map<PrehladyStravovania, DefaultTableModel> mapaModelyTab = new LinkedHashMap<>();
 		
-		// Pre kazdy typ prehladu vytvori Prehlad a Model tabulky a vlozi do map.
-		for (PrehladyStravovania prehlad : PrehladyStravovania.values()) {
+		for(PrehladyStravovania prehlad : PrehladyStravovania.values()) {
 			// Vrati list pre spravny prehlad.
 			List<Jedlo> list = ImportJedal.prehladZa(prehlad, aktualUser);
-			
-			// Sumuje setky jedla v liste.
-			Double sumaJedal = 0.0;
-			for(Jedlo j : list){
-				// Pouziva spravny kurz podla pouzivatelom zvolenej meny.
-				sumaJedal += j.getCena()*aktualUser.getMena().getKurz();
-			}
-			
-			mapaPrehlady.put(prehlad, sumaJedal);
-			mapaModelyTab.put(prehlad, vytvorModelTabulky(list));	
-			
-		}		
+			mapaModelyTab.put(prehlad, vytvorModelTabulky(list));
+		}
+						
 		
 		nahlad.akcia(aktualUser, mapaPrehlady, mapaModelyTab );
 		

@@ -8,7 +8,12 @@ public class Rodic extends User implements RozosielatelUpozornenia {
 		super(id);
 	}
 	
-	List<Upozornenie> upozornenia = new ArrayList<Upozornenie>();
+	private List<Upozornenie> upozornenia = new ArrayList<Upozornenie>();
+	
+	// Vrati list vsetkych upozorneni.
+	public List<Upozornenie> getUpozornenia() {
+		return upozornenia;
+	}
 	
 	// posli upozornenie pouzivatelovi podla userId
 	void posliUpozornenie(int userId){
@@ -21,7 +26,7 @@ public class Rodic extends User implements RozosielatelUpozornenia {
 	
 	@Override
 	public void registrujPosluchaca(PosluchacUpozornenia user) {
-		upozornenia.add(new Upozornenie("", user));		
+		upozornenia.add(new Upozornenie(user));		
 	}
 	
 	@Override

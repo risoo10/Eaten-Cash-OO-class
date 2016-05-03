@@ -36,6 +36,7 @@ public class RodicController extends UserController{
 		
 	}
 	
+	// Metoda vytvori noveho ROdica po uspesnej validacii. 
 	public static void getNovyRodicDomov(){
 		Users users	 = (Users)MapaObjektov.vratObjekt("users");
 		
@@ -54,6 +55,16 @@ public class RodicController extends UserController{
 		
 		
 		
+	}
+	
+	public static void getUpozorneniaOptions(){
+		Rodic rodic = (Rodic) aktualUser;
+		
+		// Nasilu pridaj upozornenie
+		rodic.registrujPosluchaca(new SimpleUser("Dodky"));
+		rodic.registrujPosluchaca(new SimpleUser("Miso"));
+		
+		MapaNahladov.pridajNahlad("UpozorneniaRodic", new RodicUpozornenia(rodic.getUpozornenia(), rodic) );
 	}
 	
 	
