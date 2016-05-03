@@ -1,11 +1,15 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import controllers.*;
+import controllers.OknoController;
+import controllers.Router;
 
 public class Okno extends JFrame implements Nahlad{
 	
@@ -15,13 +19,18 @@ public class Okno extends JFrame implements Nahlad{
 	public Router router = new Router();
 	private String id;
 	private int vyska = 700;
+	private Color color = Color.WHITE;
 	
+
+
+
 	// na upravovanie pocas bezania programu ... referencia
 	private JButton btnSpat;
 	private JPanel hlavickaTlacidla;
 	private JPanel hlavicka;
 	private JPanel content;
 	private JPanel spodnyPanel = null;
+	
 	
 	public Okno(){
 		super("EatenCash");
@@ -64,7 +73,7 @@ public class Okno extends JFrame implements Nahlad{
 	
 	// vymaz tlacidlaHlavicka 
 	public void vymazTlacidla(){
-		this.hlavickaTlacidla.removeAll();
+		this.hlavicka.remove(hlavickaTlacidla);
 	}
 	
 	public void nastavPovodnuVelkost(){
@@ -128,7 +137,9 @@ public class Okno extends JFrame implements Nahlad{
 		this.spodnyPanel = spodnyPanel;
 	}
 	
-
+	public Color getColor() {
+		return color;
+	}
 	
 	
 	

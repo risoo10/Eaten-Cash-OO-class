@@ -2,6 +2,8 @@ package controllers;
 
 
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.swing.*;
@@ -28,16 +30,33 @@ public class UserController {
 	public static void getDomov(){
 		
 		MapaNahladov.pridajNahlad("UserDomov", new UserDomov());
-		UserController.getDomovBack();
+		UserController.chodDomovskaStranka();
 	}
 	
+	// Podla aktualne prihlaseneho pouzivatela sa prihlasi.
+	public static void getBackDomov(){
+		if(aktualUser instanceof SimpleUser) {
+			SimpleUserController.getDomov(aktualUser.getId());
+		} else if (aktualUser instanceof Rodic){
+			RodicController.getDomov(aktualUser.getId());
+		} else if (aktualUser instanceof Master) {
+			MasterController.getDomov();
+		}
+	}
+	
+	
 	// Nacita informacie z modelu a vypise na domovsku stranku s prehladom.
-	public static void getDomovBack(){
+	private static void chodDomovskaStranka(){
 		
 		// Nastavi okno na povodnu velkost.
 		UserDomov nahlad = (UserDomov)MapaNahladov.vratNahlad("UserDomov");
+		// Nastavi tlacidla
+		PanelTlacidla tlac = new PanelTlacidla();
+		tlac.tlacidlaPreUser();
+		
 		Okno okno = nacitajOkno();
 		okno.nastavPovodnuVelkost();
+	
 		
 		// Mapa pre udaje o Prehlade financii.
 		// Mapa s modelmi pre vytvorenie tabulky.
@@ -52,7 +71,8 @@ public class UserController {
 			// Sumuje setky jedla v liste.
 			Double sumaJedal = 0.0;
 			for(Jedlo j : list){
-				sumaJedal += j.getCena();
+				// Pouziva spravny kurz podla pouzivatelom zvolenej meny.
+				sumaJedal += j.getCena()*aktualUser.getMena().getKurz();
 			}
 			
 			mapaPrehlady.put(prehlad, sumaJedal);
@@ -74,7 +94,7 @@ public class UserController {
 			dataJedlo[0] = jedlo.getNazov();
 			dataJedlo[1] = jedlo.getMiesto();
 			dataJedlo[2] = jedlo.getCas();
-			dataJedlo[3] = (String)Double.toString(jedlo.getCena()) + " €";
+			dataJedlo[3] = (String)String.format("%.2f",jedlo.getCena()*aktualUser.getMena().getKurz()) + " " + aktualUser.getMena().getZnak();
 			dataJedlo[4] = "vymazat";
 			tableModelAll.insertRow(0, dataJedlo);
 		}
@@ -97,7 +117,7 @@ public class UserController {
 				aktualUser.removeReverseJedlo(modelRow);
 				
 				// Zobrazi domovsku stranku.
-				UserController.getDomovBack();
+				UserController.chodDomovskaStranka();
 			}
 			
 		};
@@ -127,6 +147,8 @@ public class UserController {
 	// pridaj Nahlad na pridavanie noveho jedla
 	public static void getPridajNoveJedlo(){
 		MapaNahladov.pridajNahlad("PridajJedloNahlad", new PridajNoveJedlo());
+		PanelTlacidla pnlTlacidla = new PanelTlacidla();
+		pnlTlacidla.tlacidlaPreNoveJedlo();
 	}
 	
 	// uloz nove jedlo
@@ -189,14 +211,31 @@ public class UserController {
 	public static void zobrazDetailJedla(int row){
 		// zisti ci existuje zaznam v liste jedal a ci existuje taky riadok
 		List<Jedlo> jedla = aktualUser.vratListJedal();
-		
 		if(jedla.size() != 0 && row != -1){
 			Jedlo jedlo = aktualUser.getReverseJedlo(row);
 			
-			Map<String, String> udajeJedlo = jedlo.vratUdajeMapa();
-			
-			MapaNahladov.pridajNahlad("Detail", new DetailJedla(udajeJedlo));
+			// Vytvori mapu udajov s korektnymi hodnotami.
+			Map<String, String> data =  jedlo.vratUdajeMapa(aktualUser.getMena());
+			MapaNahladov.pridajNahlad("Detail", new DetailJedla(data, aktualUser.getMena()));
 		}
+		
+		// NAstav tlacidla 
+		PanelTlacidla pnl = new PanelTlacidla();
+		pnl.tlacidlaPreDetailJedla();
+		
+	}
+	
+	public static void toggleFinancnaMena(){
+		switch (aktualUser.getMena()){
+		case DOLAR:
+			aktualUser.setMena(FinancnaMena.EURO);
+			break;
+		case EURO:
+			aktualUser.setMena(FinancnaMena.DOLAR);
+			break;
+		}
+		
+		UserController.getBackDomov();
 	}
 	
 	
@@ -217,5 +256,6 @@ public class UserController {
 		
 		return errorMsg;
 	}
+	
 	
 }

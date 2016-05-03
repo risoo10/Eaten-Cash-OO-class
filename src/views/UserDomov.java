@@ -37,45 +37,19 @@ public class UserDomov extends JPanel implements Nahlad{
 		tlacidlaHlavicka.setLayout(new FlowLayout());
 		tlacidlaHlavicka.setBackground(Color.WHITE);
 		
-			
-		
-			// tlacidlo pridat nove jedlo
-			JButton btnSpat = new JButton("< SPAT");
-			btnSpat.setPreferredSize(new Dimension(100, 80));
-			btnSpat.addActionListener(Router.getRouter());
-			tlacidlaHlavicka.add(btnSpat);
-			
-			// pridaj referenciu o tlacidle spat do Okna
-			okno.setBtnSpat(btnSpat);
-			
-			// referencia o paneli tlacidiel v Okne
-			okno.setHlavickaTlacidla(tlacidlaHlavicka);
-			
-			// referencia o hlavicke do Okna
-			okno.setHlavicka(hlavicka);
 
-			
+		// referencia o paneli tlacidiel v Okne
+		okno.setHlavickaTlacidla(tlacidlaHlavicka);
 		
+		// referencia o hlavicke do Okna
+		okno.setHlavicka(hlavicka);
+
 		hlavicka.add(tlacidlaHlavicka, BorderLayout.EAST);
 		okno.add(hlavicka, BorderLayout.NORTH);
 		okno.setContent(new JPanel());
 	}
 	
-	public void akcia(User aktualUser, Map<PrehladyStravovania, Double> mapaPrehlady, Map<PrehladyStravovania, DefaultTableModel> mapaModelTab ){
-		
-		// zbavi sa starych tlacidiel
-		okno.vymazTlacidla();
-		
-			// tlacidlo pridat nove jedlo
-			JButton btnNoveJedlo = new JButton("+ NOVE JEDLO");
-			btnNoveJedlo.setPreferredSize(new Dimension(200, 80));
-			btnNoveJedlo.setActionCommand("NoveJedlo");
-			btnNoveJedlo.addActionListener(Router.getRouter());
-			okno.getHlavickaTlacidla().add(btnNoveJedlo);
-			
-			// pridaj posledne tlacidlo spat
-			okno.getHlavickaTlacidla().add(okno.getBtnSpat());
-			okno.getBtnSpat().setActionCommand("Spat");
+	public void akcia(User aktualUser, Map<PrehladyStravovania, Double> mapaPrehlady, Map<PrehladyStravovania, DefaultTableModel> mapaModelTab ){			
 		
 		
 		// vymaze predchadzajuci Obsah 
@@ -116,7 +90,8 @@ public class UserDomov extends JPanel implements Nahlad{
 		
 		// Vypise vsetky sumy	
 		for(PrehladyStravovania prehlad : mapaPrehlady.keySet()){
-			JLabel suma = new JLabel(Double.toString(mapaPrehlady.get(prehlad)) + " €");
+			// Pouzivam spravny znak podla nastavenej financnej meny.
+			JLabel suma = new JLabel(String.format("%.2f", mapaPrehlady.get(prehlad)) + " " + aktualUser.getMena().getZnak());
 			pnlPrehlad.add(suma);			
 		}
 		

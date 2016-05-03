@@ -18,8 +18,9 @@ public class RodicController extends UserController{
 		
 		UserController.getDomov();
 		
-		// Pridat funkcionalitu Rodica.
-		
+		// Prida funkcionalitu Rodica.
+		PanelTlacidla pt = new PanelTlacidla();
+		pt.tlacidlaPreRodic();	
 		
 		
 	}

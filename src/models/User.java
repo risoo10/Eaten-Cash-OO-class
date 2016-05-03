@@ -1,14 +1,17 @@
 package models;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class User implements Serializable{
 	
 	protected String id;
-	protected List<Jedlo> mojeJedla = new ArrayList<Jedlo>();	
+	protected List<Jedlo> mojeJedla = new ArrayList<Jedlo>();
+	// Povodne bude nastavena mena EURO.
+	protected FinancnaMena mena = FinancnaMena.EURO;
 	
-	
+
 	// Konstruktor s ID
 	public User(String id){
 		this.id = id;
@@ -18,6 +21,14 @@ public abstract class User implements Serializable{
 	public User(){
 		Users users = (Users) MapaObjektov.vratObjekt("users");
 		users.addUser(this);
+	}
+	
+	public FinancnaMena getMena() {
+		return mena;
+	}
+	
+	public void setMena(FinancnaMena mena) {
+		this.mena = mena;
 	}
 	
 	public String getId() {
@@ -43,13 +54,7 @@ public abstract class User implements Serializable{
 	public void addJedlo(Jedlo jedlo){
 		mojeJedla.add(jedlo);
 	}
-	
-	// vypise cely arraylist do konzoly
-	public void vypisListJedal(){
-		for(Jedlo jedlo : mojeJedla){
-			System.out.println(jedlo.getNazov()+" "+ jedlo.getMiesto() +" "+  jedlo.getCas() +" "+Double.toString(jedlo.getCena())+"€" );
-		}
-	}
+
 	// vrati string jedla z listu
 	public List<Jedlo> vratListJedal(){
 		return mojeJedla;

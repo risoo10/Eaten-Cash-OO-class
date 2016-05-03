@@ -18,18 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import models.FinancnaMena;
+
 public class DetailJedla extends JPanel implements Nahlad{
 	
 	private String id;
 	
-	public DetailJedla(Map<String, String> udaje){
-		
-		
-		// Upravim panel s tlacidlami a zmenim akciu tlacidla SPAT.
+	public DetailJedla(Map<String, String> udaje, FinancnaMena mena){
+	
 		Okno okno = (Okno)MapaNahladov.vratNahlad("Okno");
-		okno.vymazTlacidla();
-		okno.getHlavickaTlacidla().add(okno.getBtnSpat());
-		okno.nastavAkciuSpat("UserSpat");
 		
 		// Vymazem aktualny panel s obsahom.
 		okno.vymazContent();
@@ -62,7 +59,7 @@ public class DetailJedla extends JPanel implements Nahlad{
 			zakladneUdaje.add(cas);
 			
 			// Udaj CENA
-			JLabel cena = new JLabel("Jedol si za : " + udaje.get("cena") + " €", JLabel.LEFT);
+			JLabel cena = new JLabel("Jedol si za : " + udaje.get("cena") + " "+mena.getZnak(), JLabel.LEFT);
 			cena.setFont(new Font(cena.getFont().getName(), Font.BOLD, 16));
 			//cena.setPreferredSize(new Dimension(zakladneUdaje.getWidth(), 60));
 			zakladneUdaje.add(cena);

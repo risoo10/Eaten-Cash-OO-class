@@ -32,12 +32,7 @@ public class PridajNoveJedlo implements Nahlad {
 	
 	
 	private void akcia() {
-		
-		// uprava tlacidiel
-		okno.vymazTlacidla();
-		okno.getHlavickaTlacidla().add(okno.getBtnSpat());
-		okno.nastavAkciuSpat("UserSpat");
-		
+				
 		
 		okno.vymazContent();
 		// novy panel

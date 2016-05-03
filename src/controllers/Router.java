@@ -33,7 +33,11 @@ public class Router {
 					break;
 					
 				case "UserSpat":
-					UserController.getDomovBack();
+					UserController.getBackDomov();
+					break;
+					
+				case "toggleMena":
+					UserController.toggleFinancnaMena();
 					break;
 					
 				case "Spat":

@@ -32,31 +32,15 @@ public class Jedlo implements Serializable{
 	public static String[] getTableColumns(){
 		return tableColumns;
 	}
-	
-	// metoda na vratenie detailov o jedle
-	public String vratDetaily(){
-		
-		// metoda bude pretazena v podtriedach 
-		// polymorfizmus
-		
-		String detailyString = "";
-		
-		detailyString += "********** Nazov: "+nazov+"\n";
-		detailyString += "Miesto: "+miesto+"\n";
-		detailyString += "Cas: "+cas+"\n";
-		detailyString += "Cena: "+Double.toString(cena)+"\n";
-		
-		return detailyString;
-	}	
-	
+
 	
 	// Vrati udaje v podobe Linkovanej Mapy pre lepsiu praacu s retazcami.
-	public Map<String, String> vratUdajeMapa(){
+	public Map<String, String> vratUdajeMapa(FinancnaMena mena){
 		Map<String, String> data =  new LinkedHashMap<>();
 		data.put("nazov", this.nazov);
 		data.put("miesto", this.miesto);
 		data.put("casJedla", this.cas);
-		data.put("cena", Double.toString(this.cena));
+		data.put("cena", String.format("%.2f", this.cena * mena.getKurz()));
 		
 		// posli aj Datum v spravnom formate
 		DateFormat df = new SimpleDateFormat("d. MMMM y"); // d - den v mmesiaci, MMMM - mesiac slovom, y - rok ciselne

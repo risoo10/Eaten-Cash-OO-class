@@ -26,24 +26,12 @@ public class JedloDoma extends Jedlo{
 	public JedloDoma(){
 		
 	}
+
 	
-	// metoda na vratenie detailov o jedleDoma
-	public String vratDetaily(){
-		 
-		// zakladne udaje
-		String detailyString = super.vratDetaily();
-		
-		//  dodatocne udaje
-		detailyString += "Suroviny: "+suroviny+"\n";
-		detailyString += "Popis: "+popis+"\n";
-		
-		return detailyString;
-	}
-	
-	public Map<String, String> vratUdajeMapa(){
+	public Map<String, String> vratUdajeMapa(FinancnaMena mena){
 		
 		Map<String, String> udaje = new LinkedHashMap<>();
-		udaje = super.vratUdajeMapa();
+		udaje = super.vratUdajeMapa(mena);
 		udaje.put("suroviny", this.suroviny);
 		udaje.put("popis", this.popis);
 		

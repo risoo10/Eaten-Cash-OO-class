@@ -30,26 +30,12 @@ public class JedloRestauracia extends Jedlo{
 		setTipDalsieJedlo(data.get("tip"));
 		
 	}
-	
-	// metoda na vratenie detailov o jedleRetauracia v jednom String -u
-		public String vratDetaily(){
-			 
-			//  zakladne udaje
-			String detailyString = super.vratDetaily(); 
-			
-			//  dodatocne udaje
-			detailyString += "Nazov restauracie: "+nazovRestauracie+"\n";
-			detailyString += "Hodnotenie restauracie: "+hodnotenieRestauracie+"\n";
-			detailyString += "Tip na dalsie jedlo: "+tipDalsieJedlo+"\n";
-			
-			return detailyString;
-	}
-	
 		
-	public Map<String, String> vratUdajeMapa(){
+		
+	public Map<String, String> vratUdajeMapa(FinancnaMena mena){
 		
 		Map<String, String> udaje = new LinkedHashMap<>();
-		udaje = super.vratUdajeMapa();
+		udaje = super.vratUdajeMapa(mena);
 		udaje.put("nazovRestauracie", this.nazovRestauracie);
 		udaje.put("hodnotenieRestauracie", Integer.toString(this.hodnotenieRestauracie));
 		udaje.put("tip", this.tipDalsieJedlo);

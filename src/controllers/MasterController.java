@@ -15,6 +15,15 @@ public class MasterController extends UserController {
 		MapaNahladov.pridajNahlad("prihlasenieMaster", new PrihlasenieMaster());
 	}
 	
+	public static void getDomov() {
+		
+		UserController.getDomov();
+		
+		// TODO: funckionalita Mastera
+		
+		
+	}
+	
 	public static void prihlasenieDomov(){
 		
 		Master master = Master.getInstance();
@@ -53,8 +62,11 @@ public class MasterController extends UserController {
 				// Zisti ci je zadane heslo spravne
 				if(master.checkPassword(heslo)){
 					
-					// Nacita domvsku stranku po spravnom zadani hesla.
-					UserController.getDomov();
+					
+					// Nacita domvsku stranku po spravnom zadani hesla.********
+					MasterController.getDomov();
+					
+					
 				} else {
 					
 					// Naopak pri zlom hesle zase vypise chybnu spravu.
